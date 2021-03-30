@@ -1,0 +1,326 @@
+{{> header}}
+<div id="wrapper" class="toggled">
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav nav nav-tabs">
+            {{!--
+            <li class="sidebar-brand">
+                <a href="/">School</a>
+            </li> --}}
+
+            <h4 class="quiz_header">Quiz Navigation</h4>
+            <li>
+                <a class="active" id="task_1">Taks 1</a>
+            </li>
+            <li>
+                <a id="task_2">Taks 2</a>
+            </li>
+            <li>
+                <a class="" id="task_3">Taks 3</a>
+            </li>
+            <li>
+                <a class="" id="task_4">Taks 4</a>
+            </li>
+            <li>
+                <a class="" id="task_5">Taks 5</a>
+            </li>
+            <li>
+                <a class="" id="task_6">Taks 6</a>
+            </li>
+            <li>
+                <a class="" id="task_7">Taks 7</a>
+            </li>
+            <li>
+                <a class="" id="task_8">Taks 8</a>
+            </li>
+            <li>
+                <a class="" id="task_9">Taks 9</a>
+            </li>
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg student_navbar navbar-light">
+            <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">
+                <span class="navbar-toggler-icon icon-menu"></span>
+            </a>
+            <a class="navbar-brand m-auto" href="/">School</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a onclick="logout()" class="nav-link user-login">
+                            <i class="fas fa-user-circle"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div style="height: 465px; width: 100%;" id="tutorial_screen">
+            <div id="clockdiv">
+                <div>
+                    <span class="minutes"></span>
+                    <div class="smalltext">Minutes</div>
+                </div>
+                <div>
+                    <span class="seconds"></span>
+                    <div class="smalltext">Seconds</div>
+                </div>
+            </div>
+
+            <div class="slider">
+                <button onclick="sendAnswer()" style="background-color:#195ec8 !important; margin-top:10px;" id="next"
+                    type="button" class="btn nextButton btn-success">Answer</button>
+                <br>
+                <input style="pointer-events: none;" type="radio" name="slider" id="slide1" title="slide1"
+                    checked="checked" class="slider__nav" />
+                <input style="pointer-events: none;" type="radio" name="slider" id="slide2" title="slide2"
+                    class="slider__nav" />
+                <input style="pointer-events: none;" type="radio" name="slider" id="slide3" title="slide3"
+                    class="slider__nav" />
+                <input style="pointer-events: none;" type="radio" name="slider" id="slide4" title="slide4"
+                    class="slider__nav" />
+                <input style="pointer-events: none;" type="radio" name="slider" id="slide5" title="slide5"
+                    class="slider__nav" />
+                <input style="pointer-events: none;" type="radio" name="slider" id="slide6" title="slide6"
+                    class="slider__nav" />
+                <input style="pointer-events: none;" type="radio" name="slider" id="slide7" title="slide6"
+                    class="slider__nav" />
+                <input style="pointer-events: none;" type="radio" name="slider" id="slide8" title="slide6"
+                    class="slider__nav" />
+                <input style="pointer-events: none;" type="radio" name="slider" id="slide9" title="slide6"
+                    class="slider__nav" />
+                <div class="slider__inner">
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+{{> footer}}
+
+<script>
+
+    var timing;
+    var deadline;
+    var tasks = [];
+    var student_answer = -1;
+    var task_id = undefined;
+    var desc = null;
+    var dif = null;
+    var fullTime;
+    var timingSecond;
+
+    var level_id = undefined;
+    var level_number = undefined;
+
+    var page_number = undefined;
+
+    var buttonNext = document.getElementById("next");
+    buttonNext.addEventListener("click", function () {
+        next();
+    });
+
+    var sliderIndexNumber = new Number();
+    sliderIndexNumber = 1;
+    page_number = 1;
+
+    function next() {
+        page_number++;
+        fullTime = null;
+
+        if (page_number == 10) {
+
+        } else {
+            countdown(tasks[0][sliderIndexNumber].minute, tasks[0][sliderIndexNumber].second);
+
+            timing = parseInt(tasks[0][sliderIndexNumber].minute) + 1;
+            fullTime = (tasks[0][sliderIndexNumber].minute < 9 ? "0" : "") + tasks[0][sliderIndexNumber].minute + ":" + (tasks[0][sliderIndexNumber].second < 9 ? "0" : "") + tasks[0][sliderIndexNumber].second;
+            timingSecond = (tasks[0][sliderIndexNumber].second < 9 ? "0" : "") + tasks[0][sliderIndexNumber].second;
+
+            sliderIndexNumber = parseInt(sliderIndexNumber) + parseInt(1);
+            page_number = sliderIndexNumber;
+
+            if (sliderIndexNumber == 10) {
+                $("#task_9").addClass('active');
+                $("#slide" + sliderIndexNumber).prop('checked', 'checked');
+            } else {
+                $("#next").show();
+                $("#slide" + sliderIndexNumber).prop('checked', 'checked');
+                $("#task_" + sliderIndexNumber - 1).removeClass('active');
+                $("#task_" + sliderIndexNumber).addClass('active');
+            }
+        }
+    }
+</script>
+
+
+<script>
+    getTeacherProfile();
+    function getTeacherProfile() {
+        if (localStorage.getItem('inExam') === "true") {
+            window.location.href = "/student/exam_out";
+        } else {
+            localStorage.setItem("inExam", 'true');
+        }
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/student/getTaskByLevelID',
+            headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                if (typeof response.result != 'undefined' && response.result.length > 0) {
+                    if (response.result === -1) {
+                        window.location.href = "/student/exam_info";
+                    } else {
+                        self.getDesc(response.result);
+                        tasks = response.result;
+
+                        timing = parseInt(tasks[0][0].minute) + 1;
+                        fullTime = (tasks[0][0].minute < 9 ? "0" : "") + tasks[0][0].minute + ":" + (tasks[0][0].second < 9 ? "0" : "") + tasks[0][0].second;
+                        timingSecond = (tasks[0][0].second < 9 ? "0" : "") + tasks[0][0].second;
+
+                        level_id = tasks[0][0].levelid;
+                        level_number = tasks[0][0].level_number;
+                        task_id = tasks[0][0].task_id;
+
+                        countdown(tasks[0][0].minute, tasks[0][0].second);
+                    }
+                } else {
+                    noty({ text: response.status, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+                }
+            }
+        });
+    }
+
+    function getDesc(result) {
+        var counter = 0;
+        new Promise(function (resolve, reject) {
+            result[0].map(function (level) {
+                if (counter !== 8) {
+                    $(".slider__inner").append("<div class='slider__contents'><h2 class='slider__caption'> " + level.task_title + " </h2><p class='slider__txt'>" + level.question + "</p><div style='width:40% !important;'><input class='answer' type='checkbox' name='first_answer' levelNumber='" + level.level_number + "' levelID='" + level.id + "' taskID='" + level.task_id + "' value='1'>" + level.first_answer + "<br><input levelNumber='" + level.level_number + "' levelID='" + level.id + "' taskID='" + level.task_id + "' class='answer' type='checkbox' name='second_answer' value='2'>" + level.second_answer + "<br><input class='answer' type='checkbox' levelNumber='" + level.level_number + "' levelID='" + level.id + "' taskID='" + level.task_id + "' name='third_answer' value='3'>" + level.third_answer + "<br></div></div>");
+                } else {
+                    $(".slider__inner").append("<div class='slider__contents'><h2 class='slider__caption'> " + level.task_title + " </h2><p class='slider__txt'>" + level.third_answer + "</p><div style='width:40% !important;'><textarea id='essay' taskID='" + level.task_id + "' style='width: 100%; height: 120px;'>  </textarea></div></div>");
+                }
+                counter++;
+            });
+            resolve();
+        }).then(function () {
+            var answer = document.getElementsByClassName("answer");
+            var m;
+            for (m = 0; m < answer.length; m++) {
+                answer[m].addEventListener("click", function (e) {
+                    level_id = e.srcElement.attributes.levelid.value;
+                    level_number = e.srcElement.attributes.levelnumber.value;
+                    task_id = e.srcElement.attributes.taskid.value;
+                    student_answer = e.srcElement.attributes[6].value;
+                });
+            }
+
+            $('input[type="checkbox"]').on('change', function () {
+                $('input[type="checkbox"]').not(this).prop('checked', false);
+            });
+
+        })
+    }
+
+    function sendAnswer() {
+        new Promise(function (resolve, reject) {
+            dif = null;
+            // Timing
+            var start = $(".minutes").text() + ":" + $(".seconds").text();
+            var end = fullTime;
+            dif = diff(start, end);
+
+            $('.nextButton').prop("disabled", true);
+            $('input:checkbox').prop("disabled", true);
+            if (!$.trim($("#essay").val())) {
+                resolve();
+            } else {
+                student_answer = $("#essay").val();
+                task_id = $("#essay").attr("taskID");
+                localStorage.setItem("inExam", 'false');
+                resolve();
+            }
+
+        }).then(function () {
+            $.ajax({
+                type: 'POST',
+                url: `https://schoolapi.eueplus.eu/student/answerTask`,
+                data: {
+                    answer: student_answer,
+                    task_id: task_id,
+                    desc: desc,
+                    level_number: level_number,
+                    level_id: level_id,
+                    paper_count: page_number,
+                    time: dif
+                },
+                headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
+                dataType: 'json',
+                success: function (response) {
+                    if (typeof response.result != 'undefined' && response.result.length > 0) {
+                        student_answer = -1;
+                        $('.nextButton').prop("disabled", false);
+                        $('input:checkbox').prop("disabled", false);
+                        $('#classTitle').html(response.result[0].class_name);
+                        if (page_number == 10) {
+                            window.location.href = "/student/exam_success";
+                        }
+                    } else {
+
+                    }
+                }
+            });
+        });
+    }
+
+    function diff(start, end) {
+        start = start.split(":");
+        end = end.split(":");
+        var startDate = new Date(0, 0, 0, start[0], start[1], 0);
+        var endDate = new Date(0, 0, 0, end[0], end[1], 0);
+        var diff = endDate.getTime() - startDate.getTime();
+        var hours = Math.floor(diff / 1000 / 60 / 60);
+        diff -= hours * 1000 * 60 * 60;
+        var minutes = Math.floor(diff / 1000 / 60);
+        return (hours < 9 ? "0" : "") + hours + ":" + (minutes < 9 ? "0" : "") + minutes;
+    }
+
+    var timeoutHandle = null;
+    var timeID = null;
+    function countdown(minutes, seconds) {
+        clearTimeout(timeoutHandle);
+        function tick() {
+            $(".minutes").text((minutes < 10 ? "0" : "") + String(minutes));
+            $(".seconds").text((seconds < 10 ? "0" : "") + String(seconds));
+            if ((minutes < 10 ? "0" : "") + String(minutes) == "00" && (seconds < 10 ? "0" : "") + String(seconds) == "00") {
+                window.location.href = "/student/exam_out"
+            }
+            seconds--;
+            if (seconds >= 0) {
+                timeoutHandle = setTimeout(tick, 1000);
+            } else {
+                if (minutes >= 1) {
+                    // countdown(mins-1); never reach “00″ issue solved
+                    timeID = setTimeout(function () {
+                        countdown(minutes - 1, 59);
+                        timeID = null;
+                    }, 1000);
+                }
+            }
+        }
+        tick();
+    }
+</script>

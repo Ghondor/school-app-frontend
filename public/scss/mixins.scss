@@ -1,0 +1,165 @@
+@mixin backgroundAdj {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@mixin blackButton {
+    background-color: $dark;
+    border-color: $dark;
+    &:hover {
+        background-color: $grey;
+        border-color: $grey;
+    }
+}
+
+@mixin blueButton {
+    font-size: 18px;
+    background-color: #195ec8;
+    color: #fff !important;
+    border-radius: 40px !important;
+    padding: 8px 25px !important;
+    border: none;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .18);
+    i {
+        margin-right: 10px;
+    }
+}
+
+@mixin tabsToggle {
+    .card-header {
+        background-color: #f0f4fa; // border-bottom: 1px solid rgba(0,0,0,.125);
+        border: none !important;
+        margin: 0 0 2px;
+        .btn-link {
+            color: #273044;
+            font-weight: 700;
+            &:hover,
+            &:focus {
+                text-decoration: none;
+            }
+        }
+        &:first-child {
+            border-radius: 0;
+        }
+        :not(.collapsed) {
+            color: $main_blue;
+        }
+    }
+}
+
+@mixin flexBoxContainer {
+    .flex-container {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        display: flex;
+        -webkit-flex-flow: row wrap;
+        justify-content: space-around;
+    }
+    .flex-item {
+        background: $main_blue;
+        padding: 5px;
+        width: 200px;
+        height: 150px;
+        margin-top: 10px;
+        line-height: 150px;
+        color: white;
+        font-weight: bold;
+        font-size: 3em;
+        text-align: center;
+    }
+}
+
+@mixin searchBar {
+    .search {
+        display: block;
+        padding: 6px 12px !important;
+        height: 45px;
+        line-height: 1.42857143;
+        border-radius: 30px;
+        border: 2px solid #f0f2f5;
+        background: $light;
+        height: 45px;
+        box-shadow: none !important;
+        color: #555;
+    }
+    .searchButton {
+        button {
+            border: none !important;
+            background-color: $main_blue !important;
+            padding: 10px 25px;
+            margin-left: 15px;
+            border-radius: 30px;
+            &:hover {
+                background-color: inherit;
+                border: none !important;
+                outline: none !important;
+            }
+        }
+        i {
+            color: $light !important;
+        }
+    }
+}
+
+@mixin sorting {
+    .dropdown-toggle {
+        background-color: $main_blue !important;
+        border-color: $main_blue;
+        border-radius: 30px;
+        &:not(:disabled):not(.disabled).active:focus,
+        &:not(:disabled):not(.disabled):active:focus {
+            box-shadow: 0 0 0 0.2rem rgb(25, 94, 200);
+            border-color: $main_blue;
+            outline: none;
+        }
+    }
+    .btn-secondary.dropdown-toggle:focus {
+        box-shadow: 0 0 0 0.2rem rgb(25, 94, 200) !important;
+        border-color: $main_blue !important;
+        outline: none !important;
+    }
+    .dropdown-menu {
+        transition: all 0.3s;
+        background-color: #fff;
+        box-shadow: 0 18px 103px rgba(0, 0, 0, .05);
+        border: none;
+        border-radius: 0;
+        .dropdown-item {
+            padding: 12px 28px;
+        }
+    }
+}
+
+@mixin flex_container {
+    // .outer {
+    width: 100%; // height: calc(100% - 120px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    a {
+        .inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            transition: all 0.5s ease;
+            flex-basis: (100% / 2); // justify-content: space-around;
+            // padding: 15px 20px;
+            width: 300px;
+            height: 300px; // background-color: rgba(0, 0, 0, .4); // background-color: $grey;
+            // border: .3em solid rgba(0, 0, 0, .4);
+            text-align: center;
+        }
+        &:not(:last-child) {
+            margin: 0 5px 0 0;
+        } // &:hover {
+        //     .inner {
+        //         border-color: #e5e5e5;
+        //     }
+        // }
+    } // }
+}

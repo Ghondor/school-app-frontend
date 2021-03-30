@@ -1,0 +1,898 @@
+{{> header}}
+
+<nav class="navbar navbar-expand-lg navbar-light teacher-layout-nav">
+    <a class="navbar-brand" href="/">School</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/create/class">Create Class</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/classes/list">Classes List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/create/level">Create Levels</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/levels/list">Levels List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/companies">Company List</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/teacher/results">Results</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/internship">Report</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link user-login" onclick="logout()">
+                    <i class="fas fa-user-circle"></i> Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container teacher-container">
+    <div class="row">
+        <div class="col-sm-12 teacher-heading text-center">
+            <h1>Results Of Each Level</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
+                        <li onclick="getLevel(this)" level_number="1" class="nav-item">
+                            <a class="nav-link active" id="level1-tab" data-toggle="pill" href="#level1" role="tab"
+                                aria-controls="level1" aria-selected="true">Level 1</a>
+                        </li>
+                        <li onclick="getLevel(this)" level_number="2" class="nav-item">
+                            <a class="nav-link" id="level2-tab" data-toggle="pill" href="#level2" role="tab"
+                                aria-controls="level2" aria-selected="false">Level 2</a>
+                        </li>
+                        <li onclick="getLevel(this)" level_number="3" class="nav-item">
+                            <a class="nav-link" id="level3-tab" data-toggle="pill" href="#level3" role="tab"
+                                aria-controls="level3" aria-selected="false">Level 3</a>
+                        </li>
+                        <li onclick="getLevel(this)" level_number="4" class="nav-item">
+                            <a class="nav-link" id="level4-tab" data-toggle="pill" href="#level4" role="tab"
+                                aria-controls="level4" aria-selected="true">Level 4</a>
+                        </li>
+                        <li onclick="getLevel(this)" level_number="5" class="nav-item">
+                            <a class="nav-link" id="level5-tab" data-toggle="pill" href="#level5" role="tab"
+                                aria-controls="level5" aria-selected="false">Level 5</a>
+                        </li>
+                        <li onclick="getLevel(this)" level_number="6" class="nav-item">
+                            <a class="nav-link" id="level6-tab" data-toggle="pill" href="#level6" role="tab"
+                                aria-controls="level6" aria-selected="false">Level 6</a>
+                        </li>
+                        <li onclick="getLevel(this)" level_number="7" class="nav-item">
+                            <a class="nav-link" id="level7-tab" data-toggle="pill" href="#level7" role="tab"
+                                aria-controls="level7" aria-selected="true">Level 7</a>
+                        </li>
+                        <li onclick="getLevel(this)" level_number="8" class="nav-item">
+                            <a class="nav-link" id="level8-tab" data-toggle="pill" href="#level8" role="tab"
+                                aria-controls="level8" aria-selected="false">Level 8</a>
+                        </li>
+                        <li onclick="getLevel(this)" level_number="9" class="nav-item">
+                            <a class="nav-link" id="level9-tab" data-toggle="pill" href="#level9" role="tab"
+                                aria-controls="level9" aria-selected="false">Level 9</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-12">
+                    <div class="tab-content company-tabs" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="level1" role="tabpanel" aria-labelledby="level1-tab">
+                            <div class="card">
+                                <div class="card-header" id="levelheading1">
+                                    <h5 class="mb-0">Results of Level 1</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Questions Answered</th>
+                                                <th scope="col">Result</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Teacher</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="level_result_1">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="level2" role="tabpanel" aria-labelledby="level2-tab">
+                            <div class="card">
+                                <div class="card-header" id="levelheading2">
+                                    <h5 class="mb-0">Results of Level 2</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Questions Answered</th>
+                                                <th scope="col">Result</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Teacher</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="level_result_2">
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="level3" role="tabpanel" aria-labelledby="level3-tab">
+                            <div class="card">
+                                <div class="card-header" id="levelheading3">
+                                    <h5 class="mb-0">Results of Level 3</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Questions Answered</th>
+                                                <th scope="col">Result</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Teacher</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="level_result_3">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="level4" role="tabpanel" aria-labelledby="level4-tab">
+                            <div class="card">
+                                <div class="card-header" id="levelheadin4">
+                                    <h5 class="mb-0">Results of Level 4</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Questions Answered</th>
+                                                <th scope="col">Result</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Teacher</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="level_result_4">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="level5" role="tabpanel" aria-labelledby="level5-tab">
+                            <div class="card">
+                                <div class="card-header" id="levelheading5">
+                                    <h5 class="mb-0">Results of Level 5</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Questions Answered</th>
+                                                <th scope="col">Result</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Teacher</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="level_result_5">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="level6" role="tabpanel" aria-labelledby="level6-tab">
+                            <div class="card">
+                                <div class="card-header" id="levelheading6">
+                                    <h5 class="mb-0">Results of Level 6</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Questions Answered</th>
+                                                <th scope="col">Result</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Teacher</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="level_result_6">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="level7" role="tabpanel" aria-labelledby="level7-tab">
+                            <div class="card">
+                                <div class="card-header" id="levelheading7">
+                                    <h5 class="mb-0">Results of Level 7</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Questions Answered</th>
+                                                <th scope="col">Result</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Teacher</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="level_result_7">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="level8" role="tabpanel" aria-labelledby="level8-tab">
+                            <div class="card">
+                                <div class="card-header" id="levelheading8">
+                                    <h5 class="mb-0">Results of Level 8</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Questions Answered</th>
+                                                <th scope="col">Result</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Teacher</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="level_result_8">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="level9" role="tabpanel" aria-labelledby="level9-tab">
+                            <div class="card">
+                                <div class="card-header" id="levelheading9">
+                                    <h5 class="mb-0">Results of Level 9</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Questions Answered</th>
+                                                <th scope="col">Result</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Teacher</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="level_result_9">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="internshipModal" tabindex="-1" role="dialog" aria-labelledby="internshipModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="internshipModalLabel">Internship Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label> Select Company </label>
+                <br>
+                <select style="width:100% !important;">
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button data-dismiss="modal" onclick="assign()" class="btn btn-primary">Assign</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{> footer}}
+<script>
+
+    fetchData();
+
+    function getLevel(element) {
+        $("#level_result_" + $(element).attr('level_number')).html("");
+        var level_number = $(element).attr('level_number');
+        var resultData = {
+            page_number: $(element).attr('level_number')
+        };
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/teacher/results',
+            data: resultData,
+            headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                if (typeof response.result != 'undefined' && response.result.length > 0) {
+                    $.each(response.result, function (index) {
+                        if (response.result[index].result === "Passed") {
+                            $("#level_result_" + level_number).append("<tr><th scope='col'>" + response.result[index].student_name + "</th><th scope='col'>" + response.result[index].question_answered + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-success' scope='col'>" + response.result[index].result + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th><th scope='col'><a href='/teacher/student/edit?id=" + response.result[index].student_id + '&urlLevelNumber=' + response.result[index].level_number + "'><i style='color: black! important;' class='fas fa-edit'></i></a></th></tr>");
+                        } else {
+                            $("#level_result_" + level_number).append("<tr><th scope='col'>" + response.result[index].student_name + "</th><th scope='col'>" + response.result[index].question_answered + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-danger' scope='col'>" + response.result[index].result + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th><th scope='col'><a href='/teacher/student/edit?id=" + response.result[index].student_id + '&urlLevelNumber=' + response.result[index].level_number + "'><i style='color: black! important;' class='fas fa-edit'></i></a></th></tr>");
+                        }
+                    });
+                } else {
+
+                }
+            }
+        });
+    }
+
+
+
+    function fetchData() {
+        $("#level_result_1").html("");
+        var level_number = 1;
+        var resultData = {
+            page_number: level_number
+        };
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/teacher/results',
+            data: resultData,
+            headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                if (typeof response.result != 'undefined' && response.result.length > 0) {
+                    $.each(response.result, function (index) {
+                        if (response.result[index].result === "Passed") {
+                            $("#level_result_" + level_number).append("<tr><th scope='col'>" + response.result[index].student_name + "</th><th scope='col'>" + response.result[index].question_answered + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-success' scope='col'>" + response.result[index].result + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th><th scope='col'><a href='/teacher/student/edit?id=" + response.result[index].student_id + '&urlLevelNumber=' + response.result[index].level_number + "'><i style='color: black! important;' class='fas fa-edit'></i></a></th></tr>");
+                        } else {
+                            $("#level_result_" + level_number).append("<tr><th scope='col'>" + response.result[index].student_name + "</th><th scope='col'>" + response.result[index].question_answered + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-danger' scope='col'>" + response.result[index].result + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th><th scope='col'><a href='/teacher/student/edit?id=" + response.result[index].student_id + '&urlLevelNumber=' + response.result[index].level_number + "'><i style='color: black! important;' class='fas fa-edit'></i></a></th></tr>");
+                        }
+                    });
+                } else {
+
+                }
+            }
+        });
+    }
+    $('i').tooltip();
+    function getAllCompanies() {
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/teacher/companyList',
+            headers: { "authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                $.each(response.result, function (value, key) {
+                    $("select").append($("<option></option>")
+                        .attr("value", key.company_id).text(key.name));
+                });
+            },
+            error: function (err) {
+                noty({ text: err.responseJSON, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+            }
+        });
+    }
+
+    function assign(studentID) {
+        var internData = {
+            student_id: studentID,
+            company_id: $("select").val()
+        };
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/teacher/internshipCreate',
+            data: internData,
+            headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                if (typeof response.result != 'undefined' && response.result.length > 0) {
+                    if (response.result === 'OK') {
+                        noty({ text: `Intership was successfully added`, layout: 'bottomRight', type: 'success', timeout: 2000, progressBar: true });
+                        setTimeout(function () {
+                            window.location.href = "/teacher/results";
+                        }, 2500);
+                    }
+                } else {
+                    noty({ text: response.status, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+                }
+            }
+        });
+    }
+</script>
+{{!--
+<div class="row">
+    <div class="col-sm-12">
+        <div class="accordion" id="teacher-levels-results">
+            <!-- Level 1 -->
+            <div class="card">
+                <div class="card-header" id="levelheading1">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#level1" aria-expanded="true" aria-controls="level1">
+                            Result of level 1
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="level1" class="collapse show" aria-labelledby="levelheading1" data-parent="#teacher-levels-results">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="input-group mb-3 search-container">
+                                    <input type="text" class="form-control search" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon2">
+                                    <div class="input-group-append searchButton">
+                                        <button class="btn btn-outline-secondary" type="button">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="dropdown show float-right sorting">
+                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Sorted By
+                                    </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="#">Alphabetical Order</a>
+                                        <a class="dropdown-item" href="#">Allowed</a>
+                                        <a class="dropdown-item" href="#">Not Allowed</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Questions Answered</th>
+                                    <th scope="col">Resut</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Teacher</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mark</td>
+                                    <td>6</td>
+                                    <td>60</td>
+                                    <td class="text-success">Passed</td>
+                                    <td>00:10:30</td>
+                                    <td>Some Teacher</td>
+                                </tr>
+                                <tr>
+                                    <td>Jacob</td>
+                                    <td>3</td>
+                                    <td>30</td>
+                                    <td class="text-danger">Faild</td>
+                                    <td>00:15:12</td>
+                                    <td>Some Teacher</td>
+                                </tr>
+                                <tr>
+                                    <td>Larry</td>
+                                    <td>6</td>
+                                    <td>60</td>
+                                    <td class="text-success">Passed</td>
+                                    <td>00:12:01</td>
+                                    <td>Some Teacher</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Level 2 -->
+            <div class="card">
+                <div class="card-header" id="levelheading2">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#level2" aria-expanded="false" aria-controls="level2">
+                            Result of Level 2
+                        </button>
+                    </h5>
+                </div>
+                <div id="level2" class="collapse" aria-labelledby="levelheading2" data-parent="#teacher-levels-results">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="input-group mb-3 search-container">
+                                    <input type="text" class="form-control search" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon2">
+                                    <div class="input-group-append searchButton">
+                                        <button class="btn btn-outline-secondary" type="button">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="dropdown show float-right sorting">
+                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Sorted By
+                                    </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="#">Alphabetical Order</a>
+                                        <a class="dropdown-item" href="#">Allowed</a>
+                                        <a class="dropdown-item" href="#">Not Allowed</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Questions Answered</th>
+                                    <th scope="col">Resut</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Teacher</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mark</td>
+                                    <td>6</td>
+                                    <td>60</td>
+                                    <td class="text-success">Passed</td>
+                                    <td>00:10:30</td>
+                                    <td>Some Teacher</td>
+                                </tr>
+                                <tr>
+                                    <td>Jacob</td>
+                                    <td>3</td>
+                                    <td>30</td>
+                                    <td class="text-danger">Faild</td>
+                                    <td>00:15:12</td>
+                                    <td>Some Teacher</td>
+                                </tr>
+                                <tr>
+                                    <td>Larry</td>
+                                    <td>6</td>
+                                    <td>60</td>
+                                    <td class="text-success">Passed</td>
+                                    <td>00:12:01</td>
+                                    <td>Some Teacher</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Level 3 -->
+            <div class="card">
+                <div class="card-header" id="levelheading3">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#level3" aria-expanded="false" aria-controls="level3">
+                            Result of Level 3
+                        </button>
+                    </h5>
+                </div>
+                <div id="level3" class="collapse" aria-labelledby="levelheading3" data-parent="#teacher-levels-results">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="input-group mb-3 search-container">
+                                    <input type="text" class="form-control search" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon2">
+                                    <div class="input-group-append searchButton">
+                                        <button class="btn btn-outline-secondary" type="button">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="dropdown show float-right sorting">
+                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Sorted By
+                                    </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="#">Alphabetical Order</a>
+                                        <a class="dropdown-item" href="#">Allowed</a>
+                                        <a class="dropdown-item" href="#">Not Allowed</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Questions Answered</th>
+                                    <th scope="col">Resut</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Teacher</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mark</td>
+                                    <td>6</td>
+                                    <td>60</td>
+                                    <td class="text-success">Passed</td>
+                                    <td>00:10:30</td>
+                                    <td>Some Teacher</td>
+                                </tr>
+                                <tr>
+                                    <td>Jacob</td>
+                                    <td>3</td>
+                                    <td>30</td>
+                                    <td class="text-danger">Faild</td>
+                                    <td>00:15:12</td>
+                                    <td>Some Teacher</td>
+                                </tr>
+                                <tr>
+                                    <td>Larry</td>
+                                    <td>6</td>
+                                    <td>60</td>
+                                    <td class="text-success">Passed</td>
+                                    <td>00:12:01</td>
+                                    <td>Some Teacher</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Level 4 -->
+            <div class="card">
+                <div class="card-header" id="levelheading4">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#level4" aria-expanded="false" aria-controls="level4">
+                            Result of Level 4
+                        </button>
+                    </h5>
+                </div>
+                <div id="level4" class="collapse" aria-labelledby="levelheading4" data-parent="#teacher-levels-results">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="input-group mb-3 search-container">
+                                    <input type="text" class="form-control search" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon2">
+                                    <div class="input-group-append searchButton">
+                                        <button class="btn btn-outline-secondary" type="button">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="dropdown show float-right sorting">
+                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Sorted By
+                                    </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="#">Alphabetical Order</a>
+                                        <a class="dropdown-item" href="#">Allowed</a>
+                                        <a class="dropdown-item" href="#">Not Allowed</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Questions Answered</th>
+                                    <th scope="col">Resut</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Teacher</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mark</td>
+                                    <td>6</td>
+                                    <td>60</td>
+                                    <td class="text-success">Passed</td>
+                                    <td>00:10:30</td>
+                                    <td>Some Teacher</td>
+                                </tr>
+                                <tr>
+                                    <td>Jacob</td>
+                                    <td>3</td>
+                                    <td>30</td>
+                                    <td class="text-danger">Faild</td>
+                                    <td>00:15:12</td>
+                                    <td>Some Teacher</td>
+                                </tr>
+                                <tr>
+                                    <td>Larry</td>
+                                    <td>6</td>
+                                    <td>60</td>
+                                    <td class="text-success">Passed</td>
+                                    <td>00:12:01</td>
+                                    <td>Some Teacher</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Level 5 -->
+            <div class="card">
+                <div class="card-header" id="levelheading5">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#level5" aria-expanded="false" aria-controls="level5">
+                            Result of Level 5
+                        </button>
+                    </h5>
+                </div>
+                <div id="level5" class="collapse" aria-labelledby="levelheading5" data-parent="#teacher-levels-results">
+                    <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
+                        non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
+                        moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                        Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
+                        synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+            <!-- Level 6 -->
+            <div class="card">
+                <div class="card-header" id="levelheading6">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#level6" aria-expanded="false" aria-controls="level6">
+                            Result of Level 6
+                        </button>
+                    </h5>
+                </div>
+                <div id="level6" class="collapse" aria-labelledby="levelheading6" data-parent="#teacher-levels-results">
+                    <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
+                        non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
+                        moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                        Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
+                        synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+            <!-- Level 7 -->
+            <div class="card">
+                <div class="card-header" id="levelheading7">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#level7" aria-expanded="false" aria-controls="level7">
+                            Result of Level 7
+                        </button>
+                    </h5>
+                </div>
+                <div id="level7" class="collapse" aria-labelledby="levelheading7" data-parent="#teacher-levels-results">
+                    <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
+                        non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
+                        moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                        Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
+                        synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+            <!-- Level 8 -->
+            <div class="card">
+                <div class="card-header" id="levelheading8">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#level8" aria-expanded="false" aria-controls="level8">
+                            Result of Level 8
+                        </button>
+                    </h5>
+                </div>
+                <div id="level8" class="collapse" aria-labelledby="levelheading8" data-parent="#teacher-levels-results">
+                    <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
+                        non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
+                        moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                        Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
+                        synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+            <!-- Level 9 -->
+            <div class="card">
+                <div class="card-header" id="levelheading9">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#level9" aria-expanded="false" aria-controls="level9">
+                            Result of Level 9
+                        </button>
+                    </h5>
+                </div>
+                <div id="level9" class="collapse" aria-labelledby="levelheading9" data-parent="#teacher-levels-results">
+                    <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
+                        non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
+                        moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                        Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
+                        synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+            <!-- Level 10 -->
+            <div class="card">
+                <div class="card-header" id="levelheading10">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#level10" aria-expanded="false"
+                            aria-controls="level10">
+                            Result of Level 10
+                        </button>
+                    </h5>
+                </div>
+                <div id="level10" class="collapse" aria-labelledby="levelheading10" data-parent="#teacher-levels-results">
+                    <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
+                        non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
+                        moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                        Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
+                        synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+            <!-- /Level 10 -->
+        </div>
+    </div>
+</div> --}}

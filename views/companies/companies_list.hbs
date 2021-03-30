@@ -1,0 +1,272 @@
+{{> header}}
+
+<nav class="navbar navbar-expand-lg navbar-light teacher-layout-nav">
+    <a class="navbar-brand" href="/">School</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/create/class">Create Class</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/classes/list">Classes List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/create/level">Create Levels</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/levels/list">Levels List</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/teacher/companies">Company List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/results">Results</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/internship">Report</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link user-login" onclick="logout()">
+                    <i class="fas fa-user-circle"></i> Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container teacher-container">
+    <div class="row">
+        <div class="col-sm-12 teacher-heading">
+            <h1 id="classTitle"></h1>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="input-group mb-3 search-container">
+                <input id="searchInput" onkeyup="search()" type="text" class="form-control search"
+                    placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon2">
+                <div class="input-group-append searchButton">
+                    <button class="btn btn-outline-secondary" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="text-center">
+                <button class="class-add-student" data-toggle="modal" data-target="#addStudentModal">Add Company
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="dropdown show float-right sorting">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sorted By
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a onclick="alphabetic()" class="dropdown-item" href="#">Alphabetical Order</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Logo</th>
+                        <th scope="col">Company Name</th>
+                        <th scope="col">Country</th>
+                    </tr>
+                </thead>
+                <tbody id="companyList">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addStudentModal" tabindex="-1" role="dialog" aria-labelledby="addStudentLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addStudentLabel">Add Company</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Logo</label>
+                    <div style="height: 120px;" class="row">
+                        <div class="small-12 medium-2 large-2 columns">
+                            <div class="circle">
+                                <!-- User Profile Image -->
+                                <img style="object-fit: cover; height:110px; object-position: 50% 50%;"
+                                    class="profile-pic"
+                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAOVBMVEXz9Pa5vsq2u8jN0dnV2N/o6u7w8fTi5OnFydO+ws3f4ee6v8vY2+H29/jy9Pbu7/LJztbCx9HR1ty/NMEIAAAC8ElEQVR4nO3b67ZrMBiFYaSh1HHd/8XuFap1SFolXb7s8T4/18EwOyNCiSIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACryrezAy2kulR+lVl6dqip7Jr412Zyeizj7yjODjYqvhRQTMQm/1rC/OxsvapIht3xehDeN1lIOBSrtt+ZW+t1Kh02GrciEvaDNLl4Ph1e+hqvEk4Z94SZ580WchJGJNyHhH/JlrDR+uC+iU6Yqf7c2JXNga0KTlj/xOP5ujuwdpabML0mz1VXUu7eqtyEP5OAvysdvXerYhMWs4C/a+e9uyg1YXVdXh7sXTtLTagXFcaJ2rlVqQmXgzSOu5f76J5shSasylXC/NVJUbknW6kJLx8lNPNu6WhRaMKPRmmtzB+7WpSasNk+09TjmdPeotSEVbfs0HW7LFXjh2FvUWrC1Z1F1yCt1aRtW4tiE0ZqPk4dp4NUzYaypUW5CaNuGtExjdSLz8HSouCEjRqvnuLcceE/b9D+UQhOGFWZys093e7S2IfoqkFbi5ITRv1NDN24ds7SoKVF4QlfsTa4bjHchOmPI+AiYrgJXQ0uB2qoCWt3g4sWQ034qsF5i4EkbBY3ol43OGsxjIT6luvp7NG+DfhsMYSElc7jpHteAL85BhcthpBQ38zPny1uadD8x3C9JT+habD/RXdfu21rsP822fy5/IR9g/GjxXpjg+ZSKoiEY4OPFrc2GEzCR4O9XL87D4aWcNrgEHFzvkASzhv8UAAJVw3+dwkPNRhAwoMNBpDwYIPiEx5uUHzCww1KT1htX7qEmnD9/SEJSXhutgEJSUjC8/lOKPs+jfla7ajh/qPUhP6Q8C+RcJdKUML7W0HK75vA9+/hrmenM8bHgr/y7pqS8O7a43nEb7x/6Pvo3iddPa3njYx3SKMoO37rwu4mo8LIPJB4fLG2lggZoz3d5l6PQuPWahHTzEgXF79KQQUCAAAAAAAAAAAAAAAAAAAAAAAAAAAAp/gHLTI30QIHnooAAAAASUVORK5CYII=">
+
+                                <!-- Default Image -->
+                                <!-- <i class="fa fa-user fa-5x"></i> -->
+                            </div>
+                            <div class="p-image">
+                                <i class="fa fa-camera upload-button"></i>
+                                <input class="file-upload" type="file" accept="image/*" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name">
+                </div>
+                <div class="form-group">
+                    <label>Country </label>
+                    <input type="text" id="country" name="country" class="form-control" placeholder="Enter country">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button onclick="addTeacher()" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{> footer}}
+
+<script>
+    var self = this;
+    var logo = "";
+    var readURL = function (input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('.profile-pic').attr('src', e.target.result);
+                self.logo = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $(".file-upload").on('change', function () {
+        readURL(this);
+    });
+
+    $(".upload-button").on('click', function () {
+        $(".file-upload").click();
+    });
+
+    $(".circle").on('click', function () {
+        $(".file-upload").click();
+    });
+
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var value = url.searchParams.get("class_id");
+    $.ajax({
+        type: 'POST',
+        url: 'https://schoolapi.eueplus.eu/teacher/companyList',
+        data: {
+            class_id: value
+        },
+        headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
+        dataType: 'json',
+        success: function (response) {
+            if (typeof response.result != 'undefined' && response.result.length > 0) {
+                $.each(response.result, function (index) {
+                    $("#companyList").append("<tr><th scope='row'>" + response.result[index].company_id + "</th>" + "<th><img class='image--cover' src='" + response.result[index].logo + "'></th><th>" + response.result[index].name + "</th><th>" + response.result[index].country + "</th></tr>");
+                });
+            } else {
+                noty({ text: response.status, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+            }
+        }
+    });
+
+    function alphabetic() {
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/teacher/companyList',
+            headers: { "authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            data: {
+                class_id: value
+            },
+            success: function (response) {
+                if (typeof response.result != 'undefined' && response.result.length > 0) {
+                    new Promise(function (resolve, reject) {
+                        response.result = response.result.sort((a, b) =>
+                            a.name.localeCompare(b.name)
+                        );
+                        resolve(response);
+                    }).then(function (response) {
+                        $("#companyList").html("");
+                        $.each(response.result, function (index) {
+                            $("#companyList").append("<tr><th scope='row'>" + response.result[index].company_id + "</th>" + "<th><img class='image--cover' src='" + response.result[index].logo + "'></th><th>" + response.result[index].name + "</th><th>" + response.result[index].country + "</th></tr>");
+                        })
+                    });
+
+                } else {
+                    noty({ text: response.status, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+                }
+            }
+        });
+    }
+
+    function search() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("companyList");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("th")[2];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function addTeacher() {
+
+        var companyData = {
+            name: $("#name").val(),
+            country: $("#country").val(),
+            logo: self.logo
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/teacher/companyCreate',
+            data: companyData,
+            headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                if (typeof response.result != 'undefined' && response.result.length > 0) {
+                    if (response.result === 'OK') {
+                        noty({ text: `The company ${companyData.name} was added successfully`, layout: 'bottomRight', type: 'success', timeout: 2000, progressBar: true });
+                        setTimeout(function () {
+                            window.location.href = "/teacher/companies";
+                        }, 2500);
+                    }
+                } else {
+                    noty({ text: response.status, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+                }
+            }
+        });
+    }
+</script>

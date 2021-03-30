@@ -1,0 +1,25 @@
+<script>
+    function logout() {
+        localStorage.removeItem("user");
+        window.location.href = "/login";
+    }
+    if (JSON.parse(localStorage.getItem("user")) === null) {
+        var user = JSON.parse(localStorage.getItem("user"));
+        if (user.result[0].role === "T") {
+            window.location.href = "/teacher"
+        } else if (user.result[0].role === "S") {
+            window.location.href = "/student/profile"
+        } else if (user.result[0].role === "A") {
+            window.location.href = "/superadmin/profile";
+        }
+    } else {
+        var user = JSON.parse(localStorage.getItem("user"));
+        if (user.result[0].role === "T") {
+            window.location.href = "/teacher"
+        } else if (user.result[0].role === "S") {
+            window.location.href = "/student/profile"
+        } else if (user.result[0].role === "A") {
+            window.location.href = "/superadmin/profile";
+        }
+    }
+</script>

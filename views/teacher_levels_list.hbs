@@ -1,0 +1,347 @@
+{{> header}}
+
+<nav class="navbar navbar-expand-lg navbar-light teacher-layout-nav">
+    <a class="navbar-brand" href="/">School</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/create/class">Create Class</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/classes/list">Classes List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/create/level">Create Levels</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/teacher/levels/list">Levels List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/companies">Company List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/results">Results</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/internship">Report</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link user-login" onclick="logout()">
+                    <i class="fas fa-user-circle"></i> Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container teacher-container">
+    <div class="row">
+        <div class="col-sm-12 teacher-heading text-center">
+            <h1>List of Levels</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tab-content company-tabs" id="pills-tabContent">
+
+                {{!--
+                <div class="tab-pane fade" id="level2" role="tabpanel" aria-labelledby="level2-tab">
+                    <div class="card">
+                        <div class="card-header" id="levelheading2">
+                            <h5 class="mb-0">Level 2</h5>
+                        </div>
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="level3" role="tabpanel" aria-labelledby="level3-tab">
+
+                </div>
+                <div class="tab-pane fade" id="level4" role="tabpanel" aria-labelledby="level4-tab">
+
+                </div>
+                <div class="tab-pane fade" id="level5" role="tabpanel" aria-labelledby="level5-tab">
+
+                </div>
+                <div class="tab-pane fade" id="level6" role="tabpanel" aria-labelledby="level6-tab">
+
+                </div>
+                <div class="tab-pane fade" id="level7" role="tabpanel" aria-labelledby="level7-tab">
+
+                </div>
+                <div class="tab-pane fade" id="level8" role="tabpanel" aria-labelledby="level8-tab">
+
+                </div>
+                <div class="tab-pane fade" id="level9" role="tabpanel" aria-labelledby="level9-tab">
+
+                </div> --}}
+            </div>
+        </div>
+    </div>
+</div>
+
+{{> footer}}
+
+<script>
+
+    var page_number = 1;
+
+    function selectPage(element) {
+        page_number = $(element).attr('page_number');
+    }
+
+
+    function edit(element) {
+        var resultData = {
+            page_number: page_number,
+            level_id: $(element).attr('level_id')
+        };
+
+        window.location.href = "/teacher/level/edit/?level_id=" + resultData.level_id + "";
+    }
+
+
+    function findAnswer(task, answerNumber) {
+        if (answerNumber === "1") {
+            return task.first_answer;
+        } else if (answerNumber === "1") {
+            return task.second_answer;
+        } else if (answerNumber === "1") {
+            return task.third_answer;
+        } else {
+            return "Empty"
+        }
+    }
+
+    function checkField(data) {
+        if (data.question) {
+            return data.question
+        } else {
+            return data.third_answer
+        }
+    }
+
+
+    var number = 1;
+    $.ajax({
+        type: 'POST',
+        url: 'https://schoolapi.eueplus.eu/teacher/levelList',
+        headers: { "authorization": JSON.parse(localStorage.getItem("user")).token },
+        dataType: 'json',
+        success: function (response) {
+            if (typeof response.result != 'undefined' && response.result.length > 0) {
+                $.each(response.result, function (index) {
+                    if (number == 1) {
+                        $("#pills-tab").append(`
+                    <li onlick="selectPage(this)" page_number="${number}" class="nav-item">
+                    <a class="nav-link active" id="level${number}-tab" data-toggle="pill" href="#level${number}" role="tab"
+                        aria-controls="level${number}" aria-selected="true">Level ${number}</a>
+                    </li>
+                    `);
+                        $("#pills-tabContent").append(`
+                        <div class="tab-pane fade show active" id="level${number}" role="tabpanel" aria-labelledby="level${number}-tab">
+                            <div class="card">
+                                <div class="card-header" id="levelheading${number}">
+                                    <h5 class="mb-0">
+                                        Level ${number} <span onclick="edit(this)" level_id="${response.result[0][index].id}"><i class="fas fa-edit"></i></span>
+                                    </h5>
+                                </div>
+                                <div class="card-body level_id-${number}"></div>
+                            </div>
+                        </div>`
+                        );
+                    } else {
+                        $("#pills-tab").append(`<li onlick="edit(this)" page_number="${number}" class="nav-item">
+                            <a class="nav-link" id="level${number}-tab" data-toggle="pill" href="#level${number}" role="tab" aria-controls="level${number}" aria-selected="false">Level ${number}</a>
+                        </li>`);
+                        $("#pills-tabContent").append(`
+                        <div class="tab-pane fade show" id="level${number}" role="tabpanel" aria-labelledby="level${number}-tab">
+                            <div class="card">
+                                <div class="card-header" id="levelheading${number}">
+                                    <h5 class="mb-0">
+                                        Level ${number} <span onclick="edit(this)" level_id="${response.result[index][0].id}"><i class="fas fa-edit"></i></span>
+                                    </h5>
+                                </div>
+                                <div class="card-body level_id-${number}"></div>
+                            </div>
+                        </div>`
+                        );
+                    }
+
+                    number++;
+                });
+
+                var taskCount = 1;
+                var levelCount = 1;
+                response.result.map(function (element) {
+                    element.map(function (task) {
+                        if (taskCount >= 9) {
+                            $(".level_id-" + levelCount).append(`
+                        <div id="level${levelCount}_task${taskCount}" class="task">
+                            <h5>${task.task_title}</h5>
+                            <p>
+                                ${checkField(task)}
+                            </p>
+                            <p class="author">Created By: ${task.firstname}</p>
+                        </div>
+                    `);
+                            taskCount = 0;
+                        } else {
+                            $(".level_id-" + levelCount).append(`
+                        <div id="level${levelCount}_task${taskCount}" class="task">
+                            <h5>${task.task_title}</h5>
+                            <p>
+                                ${task.question}
+                            </p>
+                            <ul>
+                                <li>${task.first_answer}</li>
+                                <li>${task.second_answer}</li>
+                                <li>${task.third_answer}</li>
+                            </ul>
+                            <p class="text-success">Correct Answer: ${findAnswer(task, task.correct_answer)}</p>
+                            <p class="author">Created By: ${task.firstname}</p>
+                        </div>
+                    `);
+                        }
+                        taskCount++;
+                    });
+                    levelCount++;
+                });
+            } else {
+                noty({ text: response.status, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+            }
+        }
+    });
+</script> {{!-- DO NOT REMOVE IT'S HERE FOR EXAMPLE!
+<div class="tab-pane fade show active" id="level1" role="tabpanel" aria-labelledby="level1-tab">
+    <div class="card">
+        <div class="card-header" id="levelheading1">
+            <h5 class="mb-0">
+                Level 1
+            </h5>
+        </div>
+        <div class="card-body">
+            <div id="level1_task1" class="task">
+                <h5>Task 1</h5>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit hic ipsam nihil illo! Totam laborum corrupti, nulla veniam
+                    ipsa odio, dolores mollitia cumque, amet aliquam officiis quas atque aperiam blanditiis?
+                </p>
+                <ul>
+                    <li>Answer 1</li>
+                    <li>Answer 2</li>
+                    <li>Answer 3</li>
+                </ul>
+                <p class="text-success">Correct Answer: 1</p>
+                <p class="author">Created By: Teacher</p>
+            </div>
+            <div id="level1_task2" class="task">
+                <h5>Task 2</h5>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit hic ipsam nihil illo! Totam laborum corrupti, nulla veniam
+                    ipsa odio, dolores mollitia cumque, amet aliquam officiis quas atque aperiam blanditiis?
+                </p>
+                <ul>
+                    <li>Answer 1</li>
+                    <li>Answer 2</li>
+                    <li>Answer 3</li>
+                </ul>
+                <p class="text-success">Correct Answer: 1</p>
+                <p class="author">Created By: Teacher</p>
+            </div>
+            <div id="level1_task3" class="task">
+                <h5>Task 3</h5>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit hic ipsam nihil illo! Totam laborum corrupti, nulla veniam
+                    ipsa odio, dolores mollitia cumque, amet aliquam officiis quas atque aperiam blanditiis?
+                </p>
+                <ul>
+                    <li>Answer 1</li>
+                    <li>Answer 2</li>
+                    <li>Answer 3</li>
+                </ul>
+                <p class="text-success">Correct Answer: 1</p>
+                <p class="author">Created By: Teacher</p>
+            </div>
+            <div id="level1_task4" class="task">
+                <h5>Task 4</h5>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit hic ipsam nihil illo! Totam laborum corrupti, nulla veniam
+                    ipsa odio, dolores mollitia cumque, amet aliquam officiis quas atque aperiam blanditiis?
+                </p>
+                <ul>
+                    <li>Answer 1</li>
+                    <li>Answer 2</li>
+                    <li>Answer 3</li>
+                </ul>
+            </div>
+            <div id="level1_task5" class="task">
+                <h5>Task 5</h5>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit hic ipsam nihil illo! Totam laborum corrupti, nulla veniam
+                    ipsa odio, dolores mollitia cumque, amet aliquam officiis quas atque aperiam blanditiis?
+                </p>
+                <ul>
+                    <li>Answer 1</li>
+                    <li>Answer 2</li>
+                    <li>Answer 3</li>
+                </ul>
+            </div>
+            <div id="level1_task6" class="task">
+                <h5>Task 6</h5>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit hic ipsam nihil illo! Totam laborum corrupti, nulla veniam
+                    ipsa odio, dolores mollitia cumque, amet aliquam officiis quas atque aperiam blanditiis?
+                </p>
+                <ul>
+                    <li>Answer 1</li>
+                    <li>Answer 2</li>
+                    <li>Answer 3</li>
+                </ul>
+            </div>
+            <div id="level1_task7" class="task">
+                <h5>Task 7</h5>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit hic ipsam nihil illo! Totam laborum corrupti, nulla veniam
+                    ipsa odio, dolores mollitia cumque, amet aliquam officiis quas atque aperiam blanditiis?
+                </p>
+                <ul>
+                    <li>Answer 1</li>
+                    <li>Answer 2</li>
+                    <li>Answer 3</li>
+                </ul>
+            </div>
+            <div id="level1_task8" class="task">
+                <h5>Task 8</h5>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit hic ipsam nihil illo! Totam laborum corrupti, nulla veniam
+                    ipsa odio, dolores mollitia cumque, amet aliquam officiis quas atque aperiam blanditiis?
+                </p>
+                <ul>
+                    <li>Answer 1</li>
+                    <li>Answer 2</li>
+                    <li>Answer 3</li>
+                </ul>
+            </div>
+            <div id="level1_task9" class="task">
+                <h5>Task 9</h5>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit hic ipsam nihil illo! Totam laborum corrupti, nulla veniam
+                    ipsa odio, dolores mollitia cumque, amet aliquam officiis quas atque aperiam blanditiis?
+                </p>
+            </div>
+        </div>
+    </div>
+</div> --}}

@@ -1,0 +1,130 @@
+{{> header}}
+
+<nav class="navbar navbar-expand-lg navbar-light teacher-layout-nav">
+    <a class="navbar-brand" href="/">School</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/teacher/create/class">Create Class</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/classes/list">Classes List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/create/level">Create Levels</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/levels/list">Levels List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/companies">Company List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/results">Results</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/internship">Report</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link user-login" onclick="logout()">
+                    <i class="fas fa-user-circle"></i> Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container teacher-container">
+    <div class="row">
+        <div class="col-sm-12 teacher-heading">
+            <h1>Create Class</h1>
+        </div>
+    </div>
+
+    <div class="teacher-create-class-container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Class Name</label>
+                            <input id="class_name" type="text" class="form-control" placeholder="Enter class name">
+                        </div>
+                        <div class="form-group">
+                            <label>Headmaster</label>
+                            <br>
+                            <select class="form-control"></select>
+                        </div>
+                        <button onclick="addClass()" class="create-class-submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{> footer}}
+
+<script>
+
+    //Get All Teachers which are belongs to current school id
+    getAllTeachers();
+
+    function addClass() {
+
+        var classData = {
+            class_name: $("#class_name").val(),
+            teacher_id: $("select").val(),
+            school_id: JSON.parse(localStorage.getItem("user")).result[0].school_id
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/teacher/classCreate',
+            data: classData,
+            headers: { "authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                if (typeof response.result != 'undefined' && response.result.length > 0) {
+                    if (response.result === "OK") {
+                        noty({ text: 'Class has been added successfully', layout: 'bottomRight', type: 'success', timeout: 2000, progressBar: true });
+                    } else {
+                        noty({ text: response.result, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+                    }
+                } else {
+                    noty({ text: response.result, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+                }
+            },
+            error: function (err) {
+                noty({ text: err.responseJSON, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+            }
+        });
+    }
+
+    function getAllTeachers() {
+        var classData = {
+            school_id: JSON.parse(localStorage.getItem("user")).result[0].school_id
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/teacher/teacherList',
+            data: classData,
+            headers: { "authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                $.each(response.result, function (value, key) {
+                    $("select").append($("<option></option>")
+                        .attr("value", key.teacher_id).text(key.firstname));
+                });
+            },
+            error: function (err) {
+                noty({ text: err.responseJSON, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+            }
+        });
+    }
+</script>

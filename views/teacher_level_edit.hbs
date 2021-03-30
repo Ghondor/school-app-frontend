@@ -1,0 +1,354 @@
+{{> header}}
+
+<nav class="navbar navbar-expand-lg navbar-light teacher-layout-nav">
+    <a class="navbar-brand" href="/">School</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/create/class">Create Class</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/classes/list">Classes List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/create/level">Create Levels</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/teacher/levels/list">Levels List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/companies">Company List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/results">Results</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/internship">Report</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link user-login" onclick="logout()">
+                    <i class="fas fa-user-circle"></i> Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container teacher-container">
+    <div class="row">
+        <div class="col-sm-12 teacher-heading text-center">
+            <h1>Edit Level</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="/teacher/levels/list">
+                        <button class="create-class-submit">Back to List</button>
+                    </a>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="tab-content company-tabs" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="level1" role="tabpanel" aria-labelledby="level1-tab">
+                            <div class="card">
+                                <div class="card-header" id="levelheading1">
+                                    <h5 class="mb-0">Edit Level</h5>
+                                </div>
+                                <div class="row description_section">
+                                    <div class="col-sm-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h3 class="card-title task-heading-button">Description</h3>
+                                                <div class="form-group">
+                                                    <label>The introduction page about the level, student will see the
+                                                        the description
+                                                        page before he / she takes the tasks</label>
+                                                    <textarea class="form-control" id="description" name="description"
+                                                        rows="3"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="level_id_1" class="card-body">
+                                </div>
+                                <a>
+                                    <button onclick="update()" style="margin-left:35px; margin-bottom:20px;"
+                                        class="create-class-submit">Update</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{> footer}}
+<script>
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var url_level_id = url.searchParams.get("level_id");
+    fetchData();
+
+    function checkField(data) {
+        if (data.question) {
+            return data.question
+        } else {
+            return data.third_answer
+        }
+    }
+
+    function setCorrectAnswer(index, asnwer) {
+        new Promise(function (resolve, reject) {
+            $(document).ready(function () {
+                $(".correctanswer-" + index).val(asnwer);
+                $(".correctanswer-" + index).val(asnwer).change();
+            });
+            resolve();
+        }).then(function (data) {
+            return ' ';
+        })
+        return ' ';
+    }
+
+    function fetchData() {
+        var counter = 1;
+        $("#level_id_1").html("");
+        var level_number = url_level_id;
+        var resultData = {
+            level_id: level_number
+        };
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/teacher/singleTask',
+            data: resultData,
+            headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                if (typeof response.result != 'undefined' && response.result.length > 0) {
+                    $("#description").text(response.result[0].description);
+                    $.each(response.result, function (index) {
+                        if (index !== 8) {
+                            $("#level_id_1").append(`
+                  <div class="col-sm-12">
+                                        <div id="taskid_${index}" taskid="${response.result[index].task_id}" class="teacher-task-container">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h3 class="card-title task-heading-button">Task ${counter}</h3>
+                                                    <div id="taskQuestion1">
+                                                        <div class="form-group">
+                                                            <label>Task Title</label>
+                                                            <input type="text" value="${response.result[index].task_title}" class="form-control" name="title" placeholder="Enter task title" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Question?</label>
+                                                            <textarea class="form-control" name="question" rows="3">${response.result[index].question}</textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Answer 1</label>
+                                                            <input type="text" value="${response.result[index].first_answer}" class="form-control" name="answer1" placeholder="Enter answer 1" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Answer 2</label>
+                                                            <input type="text" value="${response.result[index].second_answer}" class="form-control" name="answer2" placeholder="Enter answer 2" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Answer 3</label>
+                                                            <input type="text" value="${response.result[index].third_answer}" class="form-control" name="answer3" placeholder="Enter answer 3" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Points</label>
+                                                            <input type="number" value="${response.result[index].points}" class="form-control" name="points" placeholder="Enter points of this quetion" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Correct Answer</label>
+                                                            <select class="form-control correctanswer-${index}" id="correct_answer" required>
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                            </select>
+                                                            ${setCorrectAnswer(index, response.result[index].correct_answer)}
+                                                        </div>
+                                                        <div>
+                                                            <label>Time</label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <label>minutes</label>
+                                                                    <input value="${response.result[index].minute}" type="number" class="form-control" id="minutes" placeholder="Number of minutes" required>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label>Seconds</label>
+                                                                    <input value="${response.result[index].second}" type="number" class="form-control" id="seconds" placeholder="Number of seconds" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                            </div>
+                        `);
+                        } else {
+                            $("#level_id_1").append(`
+                  <div class="col-sm-12">
+                                        <div id="taskid_${index}" taskid="${response.result[index].task_id}" class="teacher-task-container">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h3 class="card-title task-heading-button">Task ${counter}</h3>
+                                                    <div id="taskQuestion1">
+                                                        <div class="form-group">
+                                                            <label>Task Title</label>
+                                                            <input type="text" value="${response.result[index].task_title}" class="form-control" name="title" placeholder="Enter task title" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Question?</label>
+                                                            <textarea class="form-control" name="question" rows="3">${checkField(response.result[index])}</textarea>
+                                                        </div>
+                                                        <div style="display:none;" class="form-group">
+                                                            <label>Answer 1</label>
+                                                            <input type="text" value="${response.result[index].first_answer}" class="form-control" name="answer1" placeholder="" disabled>
+                                                        </div>
+                                                        <div style="display:none;" class="form-group">
+                                                            <label>Answer 2</label>
+                                                            <input type="text" value="${response.result[index].second_answer}" class="form-control" name="answer2" placeholder="" disabled>
+                                                        </div>
+                                                        <div style="display:none;" class="form-group">
+                                                            <label>Question</label>
+                                                            <input type="text" value="${response.result[index].third_answer}" class="form-control" name="answer3" placeholder="Question" required>
+                                                        </div>
+                                                        <div style="display:none;" class="form-group">
+                                                            <label>Points</label>
+                                                            <input type="number" value="${response.result[index].points}" class="form-control" name="points" placeholder="Point" disabled>
+                                                        </div>
+                                                        <div style="display:none;" class="form-group">
+                                                            <label>Correct Answer</label>
+                                                            <select class="form-control correctanswer-${index}" id="correct_answer" required>
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                            </select>
+                                                            ${setCorrectAnswer(index, response.result[index].correct_answer)}
+                                                        </div>
+                                                        <div>
+                                                            <label>Time</label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <label>minutes</label>
+                                                                    <input value="${response.result[index].minute}" type="number" class="form-control" id="minutes" placeholder="Number of minutes" required>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label>Seconds</label>
+                                                                    <input value="${response.result[index].second}" type="number" class="form-control" id="seconds" placeholder="Number of seconds" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                            </div>
+                        `);
+                        }
+                        counter++;
+                    });
+                } else {
+
+                }
+            }
+        });
+    }
+
+    function update() {
+        //Update form
+        var questionLenght = $(".form-group").find(".form-control").length;
+        var internalLenght = 1;
+        var essaylenght = 1;
+        var tasks = [];
+        var tempTask = [];
+        new Promise(function (resolve, reject) {
+            for (var count = 1; count < questionLenght; count++) {
+                if (internalLenght >= 9) {
+                    tempTask.push($(".form-group").find(".form-control")[count].value);
+                    tasks.push(tempTask);
+                    //Reinit
+                    tempTask = [];
+                    internalLenght = 0;
+                } else {
+                    tempTask.push($(".form-group").find(".form-control")[count].value);
+                }
+                internalLenght++;
+            }
+
+            tempTask = [];
+            tempTask.push($(".form-group").find(".form-control")[72].value);
+            tempTask.push($(".form-group").find(".form-control")[73].value);
+            tempTask.push(null);
+            tempTask.push(null);
+            tempTask.push(null);
+            tempTask.push($(".form-group").find(".form-control")[74].value);
+            tempTask.push(null);
+            tempTask.push($(".form-group").find(".form-control")[75].value);
+            tempTask.push($(".form-group").find(".form-control")[76].value);
+            tasks.push(tempTask);
+
+            resolve(tasks);
+        }).then(function (taskPayload) {
+            //Put task id payload
+            var counter = 0;
+            return new Promise(function (resolve, reject) {
+                taskPayload.map(function (taskData) {
+                    taskData[9] = $("#taskid_" + counter).attr("taskid");
+                    counter++;
+                })
+                resolve(taskPayload);
+            })
+        }).then(function (taskPayload) {
+            var description = $("#description").val();
+            var payload = {
+                taskPayload,
+                description,
+                level_id: url_level_id
+            }
+            $.ajax({
+                type: 'POST',
+                url: 'https://schoolapi.eueplus.eu/teacher/taskUpdate',
+                data: JSON.stringify(payload),
+                contentType: "application/json",
+                headers: { "authorization": JSON.parse(localStorage.getItem("user")).token },
+                dataType: 'json',
+                success: function (response) {
+                    if (typeof response.result != 'undefined' && response.result.length > 0) {
+                        if (response.result === "OK") {
+                            $(".teacher-task-container").css("pointer-events", "none");
+                            $(".teacher-task-container").css("opacity", "0.4");
+                            noty({ text: 'Level has been updated successfully', layout: 'bottomRight', type: 'success', timeout: 2000, progressBar: true });
+                            setTimeout(() => {
+                                window.location.href = "/teacher/level/edit/?level_id=" + url_level_id;
+                            }, 2500);
+                        }
+                    } else {
+                        noty({ text: response.status, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+                    }
+                }
+            });
+        })
+    }
+</script>

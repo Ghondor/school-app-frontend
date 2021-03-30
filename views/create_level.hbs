@@ -1,0 +1,220 @@
+{{> header}}
+
+<nav class="navbar navbar-expand-lg navbar-light teacher-layout-nav">
+    <a class="navbar-brand" href="/">School</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/create/class">Create Class</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/classes/list">Classes List</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/teacher/create/level">Create Levels</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/levels/list">Levels List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/companies">Company List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/results">Results</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/internship">Report</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link user-login" onclick="logout()">
+                    <i class="fas fa-user-circle"></i> Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container teacher-container">
+
+    <div style="display:none; margin-top:40px;" class="row level_limit">
+        <div class="col-sm-12">
+            <h1 style="text-align:center;">The level has been reached to 9</h1>
+            <p style="text-align:center;">
+                <b>
+                    <u> You can not add more levels </u>
+                </b>
+            </p>
+        </div>
+    </div>
+
+    <div style="display:none;" class="row teacher_heading_level">
+        <div class="col-sm-6">
+            <h1>Create Level
+                <span id="levelCount"> </span>
+            </h1>
+            <span style="margin-left:5px;">
+                <b>
+                    <u> Please fill all tasks at once. </u>
+                </b>
+            </span>
+        </div>
+
+
+
+        <div class="col-sm-6">
+            <div class="level-add-task-button">
+                <button onclick="add_fields();" id="teacher-add-task">
+                    <i class="fas fa-plus-circle"></i> Add Task</button>
+            </div>
+        </div>
+    </div>
+
+    <div style="display:none;" class="row description_section">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title task-heading-button">Description</h3>
+                    <div class="form-group">
+                        <label>The introduction page about the level, student will see the the description page before
+                            he / she
+                            takes the tasks</label>
+                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <br>
+
+    <div style="display:none;" class="row task_section">
+        <div class="col-sm-12">
+            <div class="teacher-task-container">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title task-heading-button">Task 1</h3>
+                        <div id="taskQuestion1">
+                            <div class="form-group">
+                                <label>Task Title</label>
+                                <input type="text" class="form-control" name="title" placeholder="Enter task title"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label>Question?</label>
+                                <textarea class="form-control" name="question" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Answer 1</label>
+                                <input type="text" class="form-control" name="answer1" placeholder="Enter answer 1"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label>Answer 2</label>
+                                <input type="text" class="form-control" name="answer2" placeholder="Enter answer 2"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label>Answer 3</label>
+                                <input type="text" class="form-control" name="answer3" placeholder="Enter answer 3"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label>Points</label>
+                                <input type="number" class="form-control" name="points"
+                                    placeholder="Enter points of this quetion" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Correct Answer</label>
+                                <select class="form-control" id="correct_answer" required>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Time</label>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>minutes</label>
+                                        <input type="number" class="form-control" id="minutes"
+                                            placeholder="Number of minutes" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Seconds</label>
+                                        <input type="number" class="form-control" id="seconds"
+                                            placeholder="Number of seconds" required>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button onclick="createLevel()" class="create-tasks-submit">Add</button>
+        </div>
+    </div>
+</div>
+
+{{> footer}}
+
+<script>
+    var self = this;
+    getTeacherPermission();
+    function getTeacherPermission() {
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/teacher/checkPermission',
+            headers: { "authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                if (response.result.canAddLevel === 1) {
+                    self.getCountOfLevel();
+                } else {
+                    $(".teacher_heading_level").hide();
+                    $(".task_section").hide();
+                    $(".level_limit").show();
+                    $(".description_section").hide();
+                    noty({ text: "Permission Denied! You don't have permission to manage reports", layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+                }
+            },
+            error: function (err) {
+                noty({ text: err.responseJSON, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+            }
+        });
+    }
+    function getCountOfLevel() {
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/teacher/levelCount',
+            headers: { "authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                if (response.result == 9) {
+                    $(".teacher_heading_level").hide();
+                    $(".task_section").hide();
+                    $(".level_limit").show();
+                    $(".description_section").hide();
+                    noty({ text: "You can not add more levels", layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+                } else {
+                    $(".description_section").show();
+                    $(".task_section").show();
+                    $(".teacher_heading_level").show();
+                    $("#levelCount").html(response.result + 1);
+                }
+            },
+            error: function (err) {
+                noty({ text: err.responseJSON, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+            }
+        });
+    }
+
+
+</script>

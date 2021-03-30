@@ -1,0 +1,80 @@
+
+
+
+
+<script>
+    function getLevel(element) {
+        $("#level_result_" + $(element).attr('level_number')).html("");
+        var level_number = $(element).attr('level_number');
+        var levelData = {
+            level_number: level_number
+        }
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/student/results',
+            data: levelData,
+            headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                if (typeof response.result != 'undefined' && response.result.length > 0) {
+                    $.each(response.result, function (index) {
+                        if (index === 8 && response.result[index].status === "Pending") {
+                            $("#level_result_" + level_number).append("<tr><th scope='col'>" + "<b>Essay<b>" + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-warning' scope='col'>" + response.result[index].status + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th></tr>");
+                        }
+                        else if (index === 8 && response.result[index].status === "Passed") {
+                            $("#level_result_" + level_number).append("<tr><th scope='col'>" + "<b>Essay<b>" + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-success' scope='col'>" + response.result[index].status + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th></tr>");
+                        }
+                        else {
+                            if (response.result[index].status === "Passed") {
+                                $("#level_result_" + level_number).append("<tr><th scope='col'>" + response.result[index].answer + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-success' scope='col'>" + response.result[index].status + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th></tr>");
+                            } else {
+                                $("#level_result_" + level_number).append("<tr><th scope='col'>" + response.result[index].answer + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-danger' scope='col'>" + response.result[index].status + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th></tr>");
+                            }
+
+                        }
+                    });
+                } else {
+
+                }
+            }
+        });
+    }
+
+    function fetchList() {
+        $("#level_result_1").html("");
+        var level_number = 1;
+        var levelData = {
+            level_number: level_number
+        }
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/student/results',
+            data: levelData,
+            headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                if (typeof response.result != 'undefined' && response.result.length > 0) {
+                    $.each(response.result, function (index) {
+                        if (index === 8 && response.result[index].status === "Pending") {
+                            $("#level_result_" + level_number).append("<tr><th scope='col'>" + "<b>Essay<b>" + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-warning' scope='col'>" + response.result[index].status + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th></tr>");
+                        }
+                        else if (index === 8 && response.result[index].status === "Passed") {
+                            $("#level_result_" + level_number).append("<tr><th scope='col'>" + "<b>Essay<b>" + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-success' scope='col'>" + response.result[index].status + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th></tr>");
+                        }
+                        else {
+                            if (response.result[index].status === "Passed") {
+                                $("#level_result_" + level_number).append("<tr><th scope='col'>" + response.result[index].answer + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-success' scope='col'>" + response.result[index].status + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th></tr>");
+                            } else {
+                                $("#level_result_" + level_number).append("<tr><th scope='col'>" + response.result[index].answer + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-danger' scope='col'>" + response.result[index].status + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th></tr>");
+                            }
+
+                        }
+                    });
+                } else {
+
+                }
+            }
+        });
+    }
+
+</script>

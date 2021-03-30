@@ -1,0 +1,112 @@
+{{> header}}
+
+<nav class="navbar navbar-expand-lg navbar-light teacher-layout-nav">
+    <a class="navbar-brand" href="/">School</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/create/class">Create Class</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/classes/list">Classes List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/create/level">Create Levels</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/levels/list">Levels List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/companies">Company List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/results">Results</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teacher/internship">Report</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link user-login" onclick="logout()">
+                    <i class="fas fa-user-circle"></i> Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container teacher-container">
+    <div id="profile">
+        <div class="teacher-profile-heading">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 text-center">
+                    <h1 id="username">Username</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="text-center teacher-profile-img">
+                    <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form row" id="registrationForm">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="student_firstname">
+                                    <h4>First name</h4>
+                                    <p id="first_name"></p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="student_firstname">
+                                    <h4>Last name</h4>
+                                    <p id="last_name"></p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="student_firstname">
+                                    <h4>Email</h4>
+                                    <p id="email"></p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="student_firstname">
+                                    <h4>Mobile</h4>
+                                    <p id="mobile"></p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="student_firstname">
+                                    <h4>Location</h4>
+                                    <p id="country"></p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <button class="profile-save-button">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{> footer}}
+
+<script>
+    var user = JSON.parse(localStorage.getItem("user"));
+    $("#username").html(user.result[0].username);
+    $("#first_name").html(user.result[0].firstname);
+    $("#last_name").html(user.result[0].lastname);
+    $("#mobile").html(user.result[0].phone);
+    $("#email").html(user.result[0].email);
+    $("#country").html(user.result[0].country);
+</script>

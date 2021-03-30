@@ -1,0 +1,79 @@
+{{> header}}
+
+<nav class="navbar navbar-expand-lg navbar-light teacher-layout-nav">
+    <a class="navbar-brand" href="/">School</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link user-login" onclick="logout()">
+                    <i class="fas fa-user-circle"></i> Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<section class="start_levels_section">
+    <div class="container">
+        <div class="row examSession" style="display: none;">
+            <div class="col-sm-12">
+                <div class="start_levels_heading">
+                    <h2 id="title">Example Test and Quiz Questions</h2>
+                    <h4 class="text_desc">Description</h4>
+                </div>
+            </div>
+            <div id="desc" class="col-sm-12">
+
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div style="margin-top:20px;" class="start_levels_button">
+                <a id="start" href="/student/level">Start</a>
+                <a style="display: none; width: 8.5%;" id="back" href="/student/profile">Back</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{> footer}}
+
+
+<script>
+    getTeacherProfile();
+    function getTeacherProfile() {
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/student/getTaskByLevelID',
+            headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                $(".examSession").css('display', 'block');
+                if (typeof response.result != 'undefined' && response.result.length > 0) {
+                    self.getDesc(response.result);
+                } else if (response.result.length === 0) {
+                    $("#title").html("No Levels, Please Contact Your Class Head Master.");
+                    $(".text_desc").hide();
+                    $("#start").hide();
+                    $("#back").css('display', 'block');
+                    noty({ text: response.status, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+                } else {
+                    $("#title").html("Congratulations you finished all the tasks!");
+                    $(".text_desc").hide();
+                    $("#start").hide();
+                    $("#back").css('display', 'block');
+                    noty({ text: response.status, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+                }
+            }
+        });
+    }
+
+    function getDesc(result) {
+        $("#desc").html(result[0][0].description);
+    }
+</script>

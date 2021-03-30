@@ -1,0 +1,624 @@
+{{> header}}
+<div id="wrapper" class="toggled">
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav nav nav-tabs">
+            {{!--
+            <li class="sidebar-brand">
+                <a href="/">School</a>
+            </li> --}}
+
+            <h2>Dashboard</h2>
+            <li>
+                <a class="active" data-toggle="tab" href="#profile">
+                    <i class="fas fa-user"></i>Profile Details
+                </a>
+            </li>
+            <li>
+                <a href="/student/start/levels" class="">
+                    <i class="fas fa-file-alt"></i>Start Levels
+                </a>
+            </li>
+            <li onclick="fetchList()">
+                <a class="" data-toggle="tab" href="#results">
+                    <i class="fas fa-list-ul"></i>Results
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg student_navbar navbar-light">
+            <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">
+                <span class="navbar-toggler-icon icon-menu"></span>
+            </a>
+            <a class="navbar-brand m-auto" href="/">School</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a onclick="logout()" class="nav-link user-login">
+                            <i class="fas fa-user-circle"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <section class="student_profile_section">
+            <div class="container-fluid">
+                <div class="tab-content">
+                    <div class="tab-pane active container" id="profile">
+                        <div class="student-profile-heading">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-12 text-center">
+                                    <h1 id="username">Username</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <div class="text-center teacher-profile-img">
+                                    <img style="object-fit: cover; width: 200px; height: 200px; border-radius: 50%; margin: 20px; object-fit: cover; object-position: center right;"
+                                        id="avatar" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar rounded-circle img-thumbnail"
+                                        alt="avatar">
+                                    <div class="p-image">
+                                        <input class="file-upload" type="file" accept="image/*" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-12">
+                                <div class="card">
+                                    <div class="card-body student_details">
+                                        <div class="form row" id="registrationForm">
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="student_firstname">
+                                                    <h4>First name</h4>
+                                                    <p id="first_name"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="student_firstname">
+                                                    <h4>Last name</h4>
+                                                    <p id="last_name"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="student_firstname">
+                                                    <h4>Email</h4>
+                                                    <p id="email"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="student_firstname">
+                                                    <h4>Mobile</h4>
+                                                    <p id="mobile"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="student_firstname">
+                                                    <h4>Location</h4>
+                                                    <p id="country"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <button onclick="editProfile()" data-toggle="modal" data-target="#editProfile" class="profile-save-button">Edit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane container" id="results">
+                        <div class="student-profile-heading">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h1>Results</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
+                                    <li onclick="getLevel(this)" level_number="1" class="nav-item">
+                                        <a class="nav-link active" id="level1-tab" data-toggle="pill" href="#level1" role="tab" aria-controls="level1" aria-selected="true">Level 1</a>
+                                    </li>
+                                    <li onclick="getLevel(this)" level_number="2" class="nav-item">
+                                        <a class="nav-link" id="level2-tab" data-toggle="pill" href="#level2" role="tab" aria-controls="level2" aria-selected="false">Level 2</a>
+                                    </li>
+                                    <li onclick="getLevel(this)" level_number="3" class="nav-item">
+                                        <a class="nav-link" id="level3-tab" data-toggle="pill" href="#level3" role="tab" aria-controls="level3" aria-selected="false">Level 3</a>
+                                    </li>
+                                    <li onclick="getLevel(this)" level_number="4" class="nav-item">
+                                        <a class="nav-link" id="level4-tab" data-toggle="pill" href="#level4" role="tab" aria-controls="level4" aria-selected="true">Level 4</a>
+                                    </li>
+                                    <li onclick="getLevel(this)" level_number="5" class="nav-item">
+                                        <a class="nav-link" id="level5-tab" data-toggle="pill" href="#level5" role="tab" aria-controls="level5" aria-selected="false">Level 5</a>
+                                    </li>
+                                    <li onclick="getLevel(this)" level_number="6" class="nav-item">
+                                        <a class="nav-link" id="level6-tab" data-toggle="pill" href="#level6" role="tab" aria-controls="level6" aria-selected="false">Level 6</a>
+                                    </li>
+                                    <li onclick="getLevel(this)" level_number="7" class="nav-item">
+                                        <a class="nav-link" id="level7-tab" data-toggle="pill" href="#level7" role="tab" aria-controls="level7" aria-selected="true">Level 7</a>
+                                    </li>
+                                    <li onclick="getLevel(this)" level_number="8" class="nav-item">
+                                        <a class="nav-link" id="level8-tab" data-toggle="pill" href="#level8" role="tab" aria-controls="level8" aria-selected="false">Level 8</a>
+                                    </li>
+                                    <li onclick="getLevel(this)" level_number="9" class="nav-item">
+                                        <a class="nav-link" id="level9-tab" data-toggle="pill" href="#level9" role="tab" aria-controls="level9" aria-selected="false">Level 9</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="tab-content company-tabs" id="pills-tabContent">
+                                    <div class="tab-pane fade show active" id="level1" role="tabpanel" aria-labelledby="level1-tab">
+                                        <div class="card">
+                                            <div class="card-header" id="levelheading1">
+                                                <h5 class="mb-0">Results of Level 1</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Answer</th>
+                                                            <th scope="col">Points</th>
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col">Time</th>
+                                                            <th scope="col">Teacher</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="level_result_1">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="level2" role="tabpanel" aria-labelledby="level2-tab">
+                                        <div class="card">
+                                            <div class="card-header" id="levelheading2">
+                                                <h5 class="mb-0">Results of Level 2</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Answer</th>
+                                                            <th scope="col">Points</th>
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col">Time</th>
+                                                            <th scope="col">Teacher</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="level_result_2">
+
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="level3" role="tabpanel" aria-labelledby="level3-tab">
+                                        <div class="card">
+                                            <div class="card-header" id="levelheading3">
+                                                <h5 class="mb-0">Results of Level 3</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Answer</th>
+                                                            <th scope="col">Points</th>
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col">Time</th>
+                                                            <th scope="col">Teacher</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="level_result_3">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="level4" role="tabpanel" aria-labelledby="level4-tab">
+                                        <div class="card">
+                                            <div class="card-header" id="levelheadin4">
+                                                <h5 class="mb-0">Results of Level 4</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Answer</th>
+                                                            <th scope="col">Points</th>
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col">Time</th>
+                                                            <th scope="col">Teacher</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="level_result_4">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="level5" role="tabpanel" aria-labelledby="level5-tab">
+                                        <div class="card">
+                                            <div class="card-header" id="levelheading5">
+                                                <h5 class="mb-0">Results of Level 5</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Answer</th>
+                                                            <th scope="col">Points</th>
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col">Time</th>
+                                                            <th scope="col">Teacher</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="level_result_5">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="level6" role="tabpanel" aria-labelledby="level6-tab">
+                                        <div class="card">
+                                            <div class="card-header" id="levelheading6">
+                                                <h5 class="mb-0">Results of Level 6</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Answer</th>
+                                                            <th scope="col">Points</th>
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col">Time</th>
+                                                            <th scope="col">Teacher</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="level_result_6">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="level7" role="tabpanel" aria-labelledby="level7-tab">
+                                        <div class="card">
+                                            <div class="card-header" id="levelheading7">
+                                                <h5 class="mb-0">Results of Level 7</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Answer</th>
+                                                            <th scope="col">Points</th>
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col">Time</th>
+                                                            <th scope="col">Teacher</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="level_result_7">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="level8" role="tabpanel" aria-labelledby="level8-tab">
+                                        <div class="card">
+                                            <div class="card-header" id="levelheading8">
+                                                <h5 class="mb-0">Results of Level 8</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Answer</th>
+                                                            <th scope="col">Points</th>
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col">Time</th>
+                                                            <th scope="col">Teacher</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="level_result_8">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="level9" role="tabpanel" aria-labelledby="level9-tab">
+                                        <div class="card">
+                                            <div class="card-header" id="levelheading9">
+                                                <h5 class="mb-0">Results of Level 9</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Answer</th>
+                                                            <th scope="col">Points</th>
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col">Time</th>
+                                                            <th scope="col">Teacher</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="level_result_9">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="editProfileLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileLabel">Edit Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" id="first_name" name="first_name" class="form-control" placeholder="Enter firstname" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Enter lastname" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter phone number">
+                </div>
+                <div class="form-group">
+                    <label>Country</label>
+                    <input type="text" id="country" name="country" class="form-control" placeholder="Enter Location" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button onclick="submitChanges()" class="btn btn-primary">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- /#wrapper -->
+{{> footer}}
+
+<script>
+    function getLevel(element) {
+        $("#level_result_" + $(element).attr('level_number')).html("");
+        var level_number = $(element).attr('level_number');
+        var levelData = {
+            level_number: level_number
+        }
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/student/results',
+            data: levelData,
+            headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                if (typeof response.result != 'undefined' && response.result.length > 0) {
+                    $.each(response.result, function (index) {
+                        if (index === 8 && response.result[index].status === "Pending") {
+                            $("#level_result_" + level_number).append("<tr><th scope='col'>" + "<b>Essay<b>" + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-warning' scope='col'>" + response.result[index].status + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th></tr>");
+                        }
+                        else if (index === 8 && response.result[index].status === "Passed") {
+                            $("#level_result_" + level_number).append("<tr><th scope='col'>" + "<b>Essay<b>" + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-success' scope='col'>" + response.result[index].status + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th></tr>");
+                        }
+                        else {
+                            if (response.result[index].status === "Passed") {
+                                $("#level_result_" + level_number).append("<tr><th scope='col'>" + response.result[index].answer + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-success' scope='col'>" + response.result[index].status + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th></tr>");
+                            } else {
+                                $("#level_result_" + level_number).append("<tr><th scope='col'>" + response.result[index].answer + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-danger' scope='col'>" + response.result[index].status + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th></tr>");
+                            }
+
+                        }
+                    });
+                } else {
+
+                }
+            }
+        });
+    }
+
+    function fetchList() {
+        $("#level_result_1").html("");
+        var level_number = 1;
+        var levelData = {
+            level_number: level_number
+        }
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/student/results',
+            data: levelData,
+            headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                if (typeof response.result != 'undefined' && response.result.length > 0) {
+                    $.each(response.result, function (index) {
+                        if (index === 8 && response.result[index].status === "Pending") {
+                            $("#level_result_" + level_number).append("<tr><th scope='col'>" + "<b>Essay<b>" + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-warning' scope='col'>" + response.result[index].status + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th></tr>");
+                        }
+                        else if (index === 8 && response.result[index].status === "Passed") {
+                            $("#level_result_" + level_number).append("<tr><th scope='col'>" + "<b>Essay<b>" + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-success' scope='col'>" + response.result[index].status + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th></tr>");
+                        }
+                        else {
+                            if (response.result[index].status === "Passed") {
+                                $("#level_result_" + level_number).append("<tr><th scope='col'>" + response.result[index].answer + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-success' scope='col'>" + response.result[index].status + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th></tr>");
+                            } else {
+                                $("#level_result_" + level_number).append("<tr><th scope='col'>" + response.result[index].answer + "</th><th scope='col'>" + response.result[index].score + "</th><th class='text-danger' scope='col'>" + response.result[index].status + "</th><th scope='col'>" + response.result[index].time + "</th><th scope='col'>" + response.result[index].teacher_name + "</th></tr>");
+                            }
+
+                        }
+                    });
+                } else {
+
+                }
+            }
+        });
+    }
+
+    localStorage.setItem("inExam", 'false');
+    getTeacherProfile();
+    function editProfile() {
+        getEditProfile();
+    }
+
+    function submitChanges() {
+        var studentData = {
+            firstname: $(".modal.fade #firstname").val(),
+            lastname: $(".modal.fade #lastname").val(),
+            email: $(".modal.fade #email").val(),
+            phone: $(".modal.fade #phone").val(),
+            country: $(".modal.fade #country").val(),
+            password: $(".modal.fade #password").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/student/profileUpdate',
+            data: studentData,
+            headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                if (typeof response.result != 'undefined' && response.result.length > 0) {
+                    if (response.result === 'OK') {
+                        noty({ text: `The Profile was updated successfully`, layout: 'bottomRight', type: 'success', timeout: 2000, progressBar: true });
+                        setTimeout(function () {
+                            window.location.href = "/student/profile";
+                        }, 2500);
+                    }
+                } else {
+                    noty({ text: response.status, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+                }
+            }
+        });
+    }
+
+    function getTeacherProfile() {
+        $.ajax({
+            type: 'GET',
+            url: 'https://schoolapi.eueplus.eu/profile',
+            headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                if (typeof response.result != 'undefined' && response.result.length > 0) {
+                    self.getEditProfile(response.result);
+                    self.getUserProfile(response.result);
+                } else {
+                    noty({ text: response.status, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+                }
+            }
+        });
+    }
+
+    function getUserProfile(teacher) {
+        $("#username").html(teacher[0].username);
+        $("#first_name").html(teacher[0].firstname);
+        $("#last_name").html(teacher[0].lastname);
+        $("#mobile").html(teacher[0].phone);
+        $("#email").html(teacher[0].email);
+        $("#country").html(teacher[0].country);
+        $("#avatar").attr('src', teacher[0].image);
+    }
+
+    function getEditProfile(teacher) {
+        $(".modal.fade #first_name").val(teacher[0].firstname);
+        $(".modal.fade #last_name").val(teacher[0].lastname);
+        $(".modal.fade #phone").val(teacher[0].phone);
+        $(".modal.fade #email").val(teacher[0].email);
+        $(".modal.fade #country").val(teacher[0].country);
+    }
+
+    var self = this;
+    var logo = "";
+    var readURL = function (input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('.avatar').attr('src', e.target.result);
+                self.logo = e.target.result;
+                self.sendToServer(self.logo);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $(".file-upload").on('change', function () {
+        readURL(this);
+    });
+
+    $(".avatar").on('click', function () {
+        $(".file-upload").click();
+    });
+
+    function sendToServer(image) {
+
+        var logo = {
+            image: image
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: 'https://schoolapi.eueplus.eu/student/studentPictureUpdate',
+            data: logo,
+            headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
+            dataType: 'json',
+            success: function (response) {
+                if (typeof response.result != 'undefined' && response.result.length > 0) {
+                    if (response.result === 'OK') {
+                        noty({ text: `The profile picture was added successfully`, layout: 'bottomRight', type: 'success', timeout: 2000, progressBar: true });
+                        setTimeout(function () {
+                            window.location.href = "/student/profile";
+                        }, 2500);
+                    }
+                } else {
+                    noty({ text: response.status, layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
+                }
+            }
+        });
+    }
+
+</script>
