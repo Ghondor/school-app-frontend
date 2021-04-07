@@ -121,14 +121,14 @@
 <script>
     $.ajax({
         type: 'POST',
-        url: 'https://schoolapi.eueplus.eu/teacher/checkPermission',
+        url: 'http://localhost:3500/teacher/checkPermission',
         headers: { "authorization": JSON.parse(localStorage.getItem("user")).token },
         dataType: 'json',
         success: function (response) {
             if (response.result.canAddReport === 1) {
                 $.ajax({
                     type: 'POST',
-                    url: 'https://schoolapi.eueplus.eu/teacher/reportList',
+                    url: 'http://localhost:3500/teacher/reportList',
                     headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
                     dataType: 'json',
                     success: function (response) {
@@ -162,7 +162,7 @@
     function alphabetic() {
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/teacher/reportList',
+            url: 'http://localhost:3500/teacher/reportList',
             headers: { "authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
             success: function (response) {

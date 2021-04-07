@@ -132,7 +132,7 @@
         };
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/teacher/singleTask',
+            url: 'http://localhost:3500/teacher/singleTask',
             data: resultData,
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
@@ -200,7 +200,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                             </div>
                         `);
                         } else {
@@ -263,7 +263,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                             </div>
                         `);
                         }
@@ -329,7 +329,7 @@
             }
             $.ajax({
                 type: 'POST',
-                url: 'https://schoolapi.eueplus.eu/teacher/taskUpdate',
+                url: 'http://localhost:3500/teacher/taskUpdate',
                 data: JSON.stringify(payload),
                 contentType: "application/json",
                 headers: { "authorization": JSON.parse(localStorage.getItem("user")).token },

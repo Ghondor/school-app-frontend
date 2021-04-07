@@ -137,7 +137,7 @@
     var number = 1;
     $.ajax({
         type: 'POST',
-        url: 'https://schoolapi.eueplus.eu/teacher/levelList',
+        url: 'http://localhost:3500/teacher/levelList',
         headers: { "authorization": JSON.parse(localStorage.getItem("user")).token },
         dataType: 'json',
         success: function (response) {

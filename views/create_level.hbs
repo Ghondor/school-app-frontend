@@ -171,7 +171,7 @@
     function getTeacherPermission() {
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/teacher/checkPermission',
+            url: 'http://localhost:3500/teacher/checkPermission',
             headers: { "authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
             success: function (response) {
@@ -193,7 +193,7 @@
     function getCountOfLevel() {
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/teacher/levelCount',
+            url: 'http://localhost:3500/teacher/levelCount',
             headers: { "authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
             success: function (response) {

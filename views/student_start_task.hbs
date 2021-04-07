@@ -49,7 +49,7 @@
     function getTeacherProfile() {
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/student/getTaskByLevelID',
+            url: 'http://localhost:3500/student/getTaskByLevelID',
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
             success: function (response) {

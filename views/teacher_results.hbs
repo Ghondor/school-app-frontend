@@ -360,7 +360,7 @@
         };
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/teacher/results',
+            url: 'http://localhost:3500/teacher/results',
             data: resultData,
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
@@ -390,7 +390,7 @@
         };
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/teacher/results',
+            url: 'http://localhost:3500/teacher/results',
             data: resultData,
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
@@ -413,7 +413,7 @@
     function getAllCompanies() {
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/teacher/companyList',
+            url: 'http://localhost:3500/teacher/companyList',
             headers: { "authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
             success: function (response) {
@@ -435,7 +435,7 @@
         };
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/teacher/internshipCreate',
+            url: 'http://localhost:3500/teacher/internshipCreate',
             data: internData,
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',

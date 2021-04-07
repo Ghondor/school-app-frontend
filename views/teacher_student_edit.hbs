@@ -402,7 +402,7 @@
         }
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/teacher/getStudentAnswers',
+            url: 'http://localhost:3500/teacher/getStudentAnswers',
             data: levelData,
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
@@ -431,7 +431,7 @@
         });
     }
 
-    // Essay Grade 
+    // Essay Grade
     function getEssay() {
         var levelData = {
             level_number: activeLevel,
@@ -439,7 +439,7 @@
         }
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/teacher/getEssay',
+            url: 'http://localhost:3500/teacher/getEssay',
             data: levelData,
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
@@ -486,7 +486,7 @@
         }
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/teacher/getStudentAnswers',
+            url: 'http://localhost:3500/teacher/getStudentAnswers',
             data: levelData,
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
@@ -520,7 +520,7 @@
         $('select').empty();
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/teacher/companyList',
+            url: 'http://localhost:3500/teacher/companyList',
             headers: { "authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
             success: function (response) {
@@ -542,7 +542,7 @@
         };
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/teacher/internshipCreate',
+            url: 'http://localhost:3500/teacher/internshipCreate',
             data: internData,
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',

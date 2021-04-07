@@ -11,7 +11,7 @@
         }
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/student/results',
+            url: 'http://localhost:3500/student/results',
             data: levelData,
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
@@ -48,7 +48,7 @@
         }
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/student/results',
+            url: 'http://localhost:3500/student/results',
             data: levelData,
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',

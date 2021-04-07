@@ -73,7 +73,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: 'https://schoolapi.eueplus.eu/login',
+                url: 'http://localhost:3500/login',
                 data: data,
                 dataType: 'json',
                 success: function (response) {
@@ -86,7 +86,7 @@
                             window.location.href = "/student/profile";
                         } else if (response.result[0].role === "A") {
                             window.location.href = "/superadmin/profile";
-                        } 
+                        }
                         else {
                             noty({ text: 'Authorization Error', layout: 'bottomRight', type: 'error', timeout: 2000, progressBar: true });
                         }

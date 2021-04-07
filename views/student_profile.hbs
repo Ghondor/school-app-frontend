@@ -434,7 +434,7 @@
         }
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/student/results',
+            url: 'http://localhost:3500/student/results',
             data: levelData,
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
@@ -471,7 +471,7 @@
         }
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/student/results',
+            url: 'http://localhost:3500/student/results',
             data: levelData,
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
@@ -518,7 +518,7 @@
 
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/student/profileUpdate',
+            url: 'http://localhost:3500/student/profileUpdate',
             data: studentData,
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
@@ -540,7 +540,7 @@
     function getTeacherProfile() {
         $.ajax({
             type: 'GET',
-            url: 'https://schoolapi.eueplus.eu/profile',
+            url: 'http://localhost:3500/profile',
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
             success: function (response) {
@@ -602,7 +602,7 @@
 
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/student/studentPictureUpdate',
+            url: 'http://localhost:3500/student/studentPictureUpdate',
             data: logo,
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',

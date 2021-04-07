@@ -175,7 +175,7 @@
     var value = url.searchParams.get("class_id");
     $.ajax({
         type: 'POST',
-        url: 'https://schoolapi.eueplus.eu/teacher/companyList',
+        url: 'http://localhost:3500/teacher/companyList',
         data: {
             class_id: value
         },
@@ -195,7 +195,7 @@
     function alphabetic() {
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/teacher/companyList',
+            url: 'http://localhost:3500/teacher/companyList',
             headers: { "authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
             data: {
@@ -251,7 +251,7 @@
 
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/teacher/companyCreate',
+            url: 'http://localhost:3500/teacher/companyCreate',
             data: companyData,
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',

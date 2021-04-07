@@ -176,7 +176,7 @@
         }
         $.ajax({
             type: 'POST',
-            url: 'https://schoolapi.eueplus.eu/student/getTaskByLevelID',
+            url: 'http://localhost:3500/student/getTaskByLevelID',
             headers: { "Authorization": JSON.parse(localStorage.getItem("user")).token },
             dataType: 'json',
             success: function (response) {
@@ -257,7 +257,7 @@
         }).then(function () {
             $.ajax({
                 type: 'POST',
-                url: `https://schoolapi.eueplus.eu/student/answerTask`,
+                url: `http://localhost:3500/student/answerTask`,
                 data: {
                     answer: student_answer,
                     task_id: task_id,
